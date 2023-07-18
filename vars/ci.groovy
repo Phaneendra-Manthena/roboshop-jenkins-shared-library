@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Unit Tests') {
             steps {
-                echo 'Units Tests'
+                echo 'Unit Tests'
             }
         }
         stage('Quality Control') {
