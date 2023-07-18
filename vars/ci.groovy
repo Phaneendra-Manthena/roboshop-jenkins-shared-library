@@ -11,5 +11,15 @@ pipeline {
                 echo 'Compiling'
             }
         }
+        stage('Unit Tests') {
+            steps {
+                echo 'Units Tests'
+            }
+        }
+        stage('Quality Control') {
+            steps {
+                echo 'Quality Control'
+            }
+        }
     }
 }
