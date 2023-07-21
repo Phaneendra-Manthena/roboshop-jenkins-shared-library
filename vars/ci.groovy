@@ -1,48 +1,43 @@
 def call() {
-     try {
-    pipeline {
-        agent {
-            label 'workstation'
-        }
-        stages {
-            stage('Compile/Build') {
-                steps {
-                    script {
-                        common.compile()
-                    }
-                }
+    try {
+        pipeline {
+            agent {
+                label 'workstation'
             }
-            stage('Unit Tests') {
-                steps {
-                    script {
-                        common.unittests()
+            stages {
+                stage('Compile/Build') {
+                    steps {
+                        script {
+                            common.compile()
+                        }
                     }
                 }
-            }
-            stage('OWASP Dependency Check') {
-                steps {
-                    script {
-                        common.dependencyCheck()
+                stage('Unit Tests') {
+                    steps {
+                        script {
+                            common.unittests()
+                        }
                     }
                 }
-            }
-            stage('Quality Control') {
-                environment {
-                    SONAR_USER=$(aws ssm get-parameter --region us-east-1 --name sonarqube.user --with-decryption --query 'Parameter.Value' --output text | tr -d '"')
-
-                    SONAR_PASS=$(aws ssm get-parameter --region us-east-1 --name sonarqube.pass --with-decryption --query 'Parameter.Value' --output text | tr -d '"')
-
-                }
-                steps {
-                    sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login=$(SONAR_USER) -Dsonar.password=$(SONAR_PASS) -Dsonar.projectKey=cart
-
+                stage('OWASP Dependency Check') {
+                    steps {
+                        script {
+                            common.dependencyCheck()
+                        }
                     }
-
+                }
+                stage('Quality Control') {
+                    environment {
+                        SONAR_USER = sh(script: "aws ssm get-parameter --region us-east-1 --name sonarqube.user --with-decryption --query 'Parameter.Value' --output text | tr -d '\"'", returnStdout: true).trim()
+                        SONAR_PASS = sh(script: "aws ssm get-parameter --region us-east-1 --name sonarqube.pass --with-decryption --query 'Parameter.Value' --output text | tr -d '\"'", returnStdout: true).trim()
+                    }
+                    steps {
+                        sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login=${SONAR_USER} -Dsonar.password=${SONAR_PASS} -Dsonar.projectKey=cart"
+                    }
                 }
             }
         }
-    }
-     } catch (Exception e) {
+    } catch (Exception e) {
         common.email("Failed")
-     }
+    }
 }
