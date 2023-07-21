@@ -24,26 +24,7 @@ def dependencyCheck() {
     }
 }
 
-def sendJobFailedNotification() {
-    // Define the email subject and body
-    def subject = "Jenkins Job Failed - ${JOB_BASE_NAME}"
-    def body = """Dear Team,
+def email(email_notes){
+    mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
 
-Unfortunately, the Jenkins job "${JOB_BASE_NAME}" has failed.
-
-**Job Information:**
-- Job Name: ${JOB_BASE_NAME}
-- Jenkins URL: ${JOB_URL}
-
-Please take the necessary actions to investigate and resolve the issue.
-
-Best regards,
-Your Name"""
-
-    // Send the email notification
-    emailext (
-            to: 'phani.manthena27@gmail.com',
-            subject: subject,
-            body: body
-    )
 }
