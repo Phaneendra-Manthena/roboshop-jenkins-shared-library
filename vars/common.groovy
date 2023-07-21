@@ -24,5 +24,5 @@ def unittests() {
 }
 
 def email(email_notes){
-    println email_note
+    println email_notes
 }
