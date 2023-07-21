@@ -27,8 +27,16 @@ def call() {
                 }
             }
             stage('Quality Control') {
+                environment {
+                    SONAR_USER=$(aws ssm get-parameter --region us-east-1 --name sonarqube.user --with-decryption --query 'Parameter.Value' --output text | tr -d '"')
+
+                    SONAR_PASS=$(aws ssm get-parameter --region us-east-1 --name sonarqube.pass --with-decryption --query 'Parameter.Value' --output text | tr -d '"')
+
+                }
                 steps {
-                    sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login=admin -Dsonar.password=mjrr -Dsonar.projectKey=cart
+                    sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login=$(SONAR_USER) -Dsonar.password=$(SONAR_PASS) -Dsonar.projectKey=cart
+
+                    }
 
                 }
             }
