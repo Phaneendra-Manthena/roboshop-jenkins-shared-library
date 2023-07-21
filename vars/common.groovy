@@ -8,13 +8,9 @@ def compile() {
 }
 def unittests() {
     if (app_lang == "nodejs") {
-        try {
             sh 'npm test'
-        } catch (Exception e) {
-            email("Unit tests failed")
         }
-
-    }
+    
     if (app_lang == "java") {
         sh 'mvn test'
     }
