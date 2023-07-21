@@ -8,7 +8,7 @@ def compile() {
 }
 def unittests() {
     if (app_lang == "nodejs") {
-            sh 'npm test || true'
+            sh 'npm test'
         }
 
     if (app_lang == "java") {
@@ -25,5 +25,5 @@ def dependencyCheck() {
 }
 
 def email(email_notes){
-    println email_notes
+    mail bcc: '', body: 'Test', cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: 'Test from Jenkins', to: 'phani.manthena27@gmail.com'
 }
