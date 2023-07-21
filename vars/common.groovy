@@ -9,7 +9,7 @@ def compile() {
 def unittests() {
     if (app_lang == "nodejs") {
         try {
-            sh 'npm test || true'
+            sh 'npm test'
         } catch (Exception e) {
             common.email("Unit tests failed")
         }
