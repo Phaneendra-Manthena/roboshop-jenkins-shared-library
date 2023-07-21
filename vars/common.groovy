@@ -24,5 +24,5 @@ def unittests() {
 }
 
 def email(email_notes){
-    sh 'echo ${email_notes}'
+    println email_note
 }
