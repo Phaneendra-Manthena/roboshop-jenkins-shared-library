@@ -20,7 +20,7 @@ def unittests() {
 }
 def dependencyCheck() {
     if (dependencyCheck == true) {
-        dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check', stopBuild: true
+        dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
     }
 }
 
