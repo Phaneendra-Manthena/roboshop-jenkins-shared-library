@@ -13,7 +13,9 @@ def call() {
             }
             stage('Unit Tests') {
                 steps {
-                    common.unittests()
+                    script {
+                        common.unittests()
+                    }
                 }
             }
             stage('Quality Control') {
