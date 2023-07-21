@@ -19,7 +19,7 @@ def unittests() {
     }
 }
 def dependencyCheck() {
-    if (dependencyCheck == true) {
+    if (dependencyCheck == "true") {
         dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
     }
 }
