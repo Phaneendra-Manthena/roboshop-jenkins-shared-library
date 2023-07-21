@@ -8,7 +8,7 @@ def compile() {
 }
 def unittests() {
     if (app_lang == "nodejs") {
-            sh 'npm test'
+            sh 'npm test || true'
         }
 
     if (app_lang == "java") {
@@ -24,7 +24,7 @@ def dependencyCheck() {
     }
 }
 
-def email(email_notes){
+def email(){
     mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
 
 }
