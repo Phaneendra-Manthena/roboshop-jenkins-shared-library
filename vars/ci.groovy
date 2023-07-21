@@ -19,6 +19,13 @@ def call() {
                         }
                     }
                 }
+                stage('OWASP Dependency Check') {
+                    steps {
+                        script {
+                            common.dependencyCheck()
+                        }
+                    }
+                }
                 stage('Quality Control') {
                     steps {
                         echo 'Quality Control'
