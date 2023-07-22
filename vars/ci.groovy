@@ -49,7 +49,7 @@ def call() {
                     }
                     steps {
                         script {
-                            if (env.SONAR_SCAN == $sonarqube_scan) {
+                            if (env.SONAR_SCAN == ${sonarqube_scan}) {
                                 wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
 //                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
                                     sh "echo Sonar Scan"
