@@ -34,11 +34,10 @@ def sonarQubecheck() {
 
         // Wrap the password to mask it in the Jenkins build log
         wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]])
-            // Execute SonarQube analysis
-            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-
-    } else {
-        echo 'SonarQube Scan Skipped'
+                {
+                    // Execute SonarQube analysis
+                    sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
+                }
     }
 }
 def email(email_note){
