@@ -44,14 +44,14 @@ def call() {
                     }
                     steps {
                         script {
-                                wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
+                            wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
 //                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-                                    sh "echo Sonar Scan"
-                                }
+                                sh "echo Sonar Scan"
                             }
                         }
+                    }
 
-                stage('Upload to Centralized Place') {
+                    stage('Upload to Centralized Place') {
                         steps {
                             script {
 
@@ -62,16 +62,17 @@ def call() {
                         }
                     }
 
-                stage('Cleaning WorkSpace') {
-                    steps {
-                        script {
-                            cleanWs()
+                    stage('Cleaning WorkSpace') {
+                        steps {
+                            script {
+                                cleanWs()
+                            }
                         }
                     }
                 }
             }
         }
-    } catch(Exception email_note) {
+    } catch (Exception email_note) {
         common.email("Failed")
     }
 }
