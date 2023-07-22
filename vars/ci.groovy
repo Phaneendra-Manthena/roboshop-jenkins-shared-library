@@ -8,7 +8,7 @@ def call() {
                 stage('SCM'){
                     steps{
                         script{
-                            git branch: 'main', url: 'https://github.com/Phaneendra-Manthena/${component}.git'
+                            git branch: 'main', url: 'https://github.com/Phaneendra-Manthena/${component}'
                         }
                     }
                 }
