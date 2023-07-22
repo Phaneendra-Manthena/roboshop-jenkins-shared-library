@@ -43,7 +43,6 @@ def call() {
                             sh "echo Sonar Scan"
                         }
                     }
-
                 }
                 stage('Cleaning WorkSpace') {
                     steps{
