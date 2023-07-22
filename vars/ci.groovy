@@ -49,15 +49,9 @@ def call() {
                         }
                     }
                 }
-//                if(env.PUSH_CODE == "true") {
+                if (env.PUSH_CODE == "true") {
                     stage('Upload to Centralized Place') {
-                        steps {
-                            script{
-                                if (env.PUSH_CODE == "true") {
-                                    echo 'Uploading to Centralized Place'
-                                }
-                            }
-                        }
+                        echo 'Uploading to Centralized Place'
                     }
                 }
                 stage('Cleaning WorkSpace') {
