@@ -43,7 +43,7 @@ def call() {
                     }
                     steps {
                         wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
-                            sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=cart"
+                            sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${compomemt}"
                         }
                     }
                 }
