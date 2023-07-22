@@ -26,7 +26,7 @@ def dependencyCheck() {
         echo 'Skipping Dependency checks'
     }
 }
-def sonarQubecheck(sonarQubecheck) {
+def sonarQubecheck() {
     if (sonarQubecheck == "true") {
         // Retrieve SonarQube credentials from AWS SSM Parameter Store
         def SONAR_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names sonarqube.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
@@ -36,7 +36,7 @@ def sonarQubecheck(sonarQubecheck) {
         wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]])
             // Execute SonarQube analysis
             sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-        
+
     } else {
         echo 'SonarQube Scan Skipped'
     }
