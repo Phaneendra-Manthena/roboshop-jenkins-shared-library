@@ -8,13 +8,6 @@ def call() {
                 label 'workstation'
             }
             stages {
-//                stage('Clean WorkSpace') {
-//                    steps {
-//                        script {
-//                            cleanWs()
-//                        }
-//                    }
-//                }
                 stage('Compile/Build') {
                     steps {
                         script {
@@ -46,7 +39,7 @@ def call() {
                     }
                     steps {
                         wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
-                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
+//                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
 //                            sh "echo Sonar Scan"
                         }
                     }
