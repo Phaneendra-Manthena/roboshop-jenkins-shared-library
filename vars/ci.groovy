@@ -6,7 +6,11 @@ def call() {
             }
             stages {
                 stage('Clean WorkSpace') {
-                    cleanWs()
+                    steps {
+                        script {
+                            cleanWs()
+                        }
+                    }
                 }
                 stage('Compile/Build') {
                     steps {
