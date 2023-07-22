@@ -71,7 +71,7 @@ def call() {
                             }
                         }
                     }
-                 
+
                 stage('Cleaning WorkSpace') {
                     steps {
                         script {
