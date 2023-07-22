@@ -58,7 +58,6 @@ def call() {
                                 }
                             }
                         }
-                        echo 'Uploading to Centralized Place'
                     }
                 }
                 stage('Cleaning WorkSpace') {
