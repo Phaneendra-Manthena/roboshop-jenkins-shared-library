@@ -37,9 +37,7 @@ def sonarQubecheck(sonarQubecheck) {
             // Execute SonarQube analysis
             sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
         }
-    } else {
-        echo 'SonarQube Scan Skipped'
-    }
+    } 
 }
 
 def email(email_note){
