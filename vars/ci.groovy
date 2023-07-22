@@ -1,8 +1,8 @@
 def call() {
+    try {
     if (!env.SONAR_EXTRA_OPTS) {
         env.SONAR_EXTRA_OPTS = " "
     }
-    try {
         pipeline {
             agent {
                 label 'workstation'
