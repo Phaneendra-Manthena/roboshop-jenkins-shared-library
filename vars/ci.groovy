@@ -46,6 +46,14 @@ def call() {
                             sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} ${SONAR_EXTRA_OPTS}"
                         }
                     }
+
+                }
+                stage('Cleaning WorkSpace') {
+                    steps{
+                        script{
+                            cleanWs()
+                        }
+                    }
                 }
             }
         }
