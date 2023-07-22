@@ -48,14 +48,17 @@ def call() {
 
                     }
                     steps {
-                        if (env.SONAR_SCAN == "true") {
-                            wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
+                        script {
+                            if (env.SONAR_SCAN == "true") {
+                                wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
 //                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-                                sh "echo Sonar Scan"
+                                    sh "echo Sonar Scan"
+                                }
                             }
                         }
                     }
                 }
+
                 // Move the 'Upload to Centralized Place' stage outside of the 'stages' block
 //                if (env.PUSH_CODE == "true") {
                 stage('Upload to Centralized Place') {
@@ -68,7 +71,7 @@ def call() {
                             }
                         }
                     }
-                 Add the 'Cleaning WorkSpace' stage outside of the 'stages' block
+                 
                 stage('Cleaning WorkSpace') {
                     steps {
                         script {
