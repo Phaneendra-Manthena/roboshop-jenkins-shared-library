@@ -52,11 +52,14 @@ def call() {
                 // Move the 'Upload to Centralized Place' stage outside of the 'stages' block
                     stage('Upload to Centralized Place') {
                         steps {
-                            if (env.PUSH_CODE == "true") {
-                            echo 'Uploading to Centralized Place'
+                            script {
+
+                                if (env.PUSH_CODE == "true") {
+                                    echo 'Uploading to Centralized Place'
+                                }
+                            }
                         }
                     }
-                }
                 // Add the 'Cleaning WorkSpace' stage outside of the 'stages' block
                 stage('Cleaning WorkSpace') {
                     steps {
