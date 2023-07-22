@@ -34,13 +34,14 @@ def sonarQubecheck(sonarQubecheck) {
 //        def SONAR_PASS = sh(script: "aws secretsmanager get-secret-value --secret-id sonar.pass | jq -r '.SecretString'", returnStdout: true).trim()
 
         // Wrap the password to mask it in the Jenkins build log
-        wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
+        wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]])
             // Execute SonarQube analysis
             sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-        }
-    } else {
+        } else {
         echo 'SonarQube Scan Skipped'
-    }
+
+        }
+
 }
 def email(email_note){
     mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
