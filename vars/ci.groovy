@@ -50,11 +50,12 @@ def call() {
                     }
                 }
                 // Move the 'Upload to Centralized Place' stage outside of the 'stages' block
-                    stage('Upload to Centralized Place') {
+                if (env.PUSH_CODE == "true") {
+                stage('Upload to Centralized Place') {
                         steps {
                             script {
 
-                                if (env.PUSH_CODE == "true") {
+//                                if (env.PUSH_CODE == "true") {
                                     echo 'Uploading to Centralized Place'
                                 }
                             }
