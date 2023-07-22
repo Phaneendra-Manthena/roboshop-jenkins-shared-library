@@ -5,6 +5,9 @@ def call() {
                 label 'workstation'
             }
             stages {
+                stage('Clean WorkSpace') {
+                    cleanWs()
+                }
                 stage('Compile/Build') {
                     steps {
                         script {
@@ -39,9 +42,6 @@ def call() {
                             sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=cart"
                         }
                     }
-                }
-                stage('Clean WorkSpace') {
-                    cleanWs()
                 }
             }
         }
