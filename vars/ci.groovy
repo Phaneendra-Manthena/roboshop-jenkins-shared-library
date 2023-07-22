@@ -60,7 +60,7 @@ def call() {
                 }
             }
         }
-    } catch(Exception e) {
+    } catch(Exception email_note) {
         common.email("Failed")
     }
 }
