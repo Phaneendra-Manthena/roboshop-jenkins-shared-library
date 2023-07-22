@@ -26,9 +26,6 @@ def dependencyCheck() {
         echo 'Skipping Dependency checks'
     }
 }
-def sonarScan(String sonarUrl, String sonarUser, String sonarPass, String component, String sonarExtraOpts) {
-    sh "sonar-scanner -Dsonar.host.url=${sonarUrl} -Dsonar.login=${sonarUser} -Dsonar.password=${sonarPass} -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${sonarExtraOpts}"
-}
 
 def email(email_note){
     mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
