@@ -7,11 +7,6 @@ def call() {
     } else {
         env.PUSH_CODE = "true"
     }
-    if (!env.SONAR_SCAN) {
-        env.SONAR_SCAN = "true"
-    } else {
-        env.SONAR_SCAN = "false"
-    }
     try {
         pipeline {
             agent {
@@ -49,7 +44,6 @@ def call() {
                     }
                     steps {
                         script {
-                            if (env.SONAR_SCAN == "false") {
                                 wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
 //                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
                                     sh "echo Sonar Scan"
@@ -57,8 +51,6 @@ def call() {
                             }
                         }
                     }
-                }
-
                 // Move the 'Upload to Centralized Place' stage outside of the 'stages' block
 //                if (env.PUSH_CODE == "true") {
                 stage('Upload to Centralized Place') {
