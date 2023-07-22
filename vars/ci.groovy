@@ -1,8 +1,8 @@
 def call() {
     try {
-    if (!env.SONAR_EXTRA_OPTS) {
+      if (!env.SONAR_EXTRA_OPTS) {
         env.SONAR_EXTRA_OPTS = " "
-    }
+       }
         pipeline {
             agent {
                 label 'workstation'
@@ -60,7 +60,7 @@ def call() {
                 }
             }
         }
-    } catch (Exception e) {
+    } catch(Exception e) {
         common.email("Failed")
     }
 }
