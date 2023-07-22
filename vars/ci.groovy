@@ -2,6 +2,11 @@ def call() {
       if (!env.SONAR_EXTRA_OPTS) {
         env.SONAR_EXTRA_OPTS = " "
        }
+    if (!env.TAG_NAME) {
+        env.PUSH_CODE = "false"
+    } else {
+        env.PUSH_CODE = "true"
+    }
     try {
         pipeline {
             agent {
@@ -42,6 +47,11 @@ def call() {
 //                            sh "sonar-scanner -Dsonar.host.url=http://34.124.155.157:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
                             sh "echo Sonar Scan"
                         }
+                    }
+                }
+                if(env.PUSH_CODE == "true") {
+                    stage('Upload to Centralized Place') {
+                        echo 'Uploading to Centralized Place'
                     }
                 }
                 stage('Cleaning WorkSpace') {
