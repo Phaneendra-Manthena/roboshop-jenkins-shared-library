@@ -5,13 +5,13 @@ def call() {
                 label 'workstation'
             }
             stages {
-                stage('Clean WorkSpace') {
-                    steps {
-                        script {
-                            cleanWs()
-                        }
-                    }
-                }
+//                stage('Clean WorkSpace') {
+//                    steps {
+//                        script {
+//                            cleanWs()
+//                        }
+//                    }
+//                }
                 stage('Compile/Build') {
                     steps {
                         script {
