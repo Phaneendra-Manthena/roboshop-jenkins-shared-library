@@ -5,6 +5,13 @@ def call() {
                 label 'workstation'
             }
             stages {
+                stage('SCM'){
+                    steps{
+                        script{
+                            git branch: 'main', url: 'https://github.com/Phaneendra-Manthena/${component}.git'
+                        }
+                    }
+                }
                 stage('Clean WorkSpace') {
                     steps {
                         script {
