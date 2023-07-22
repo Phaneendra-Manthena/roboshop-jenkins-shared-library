@@ -26,9 +26,8 @@ def dependencyCheck() {
         echo 'Skipping Dependency checks'
     }
 }
-def sonarQubecheck() {
+def sonarQubecheck(sonarQubecheck) {
     if (sonarQubecheck == "true") {
-
         // Retrieve SonarQube credentials from AWS SSM Parameter Store
         def SONAR_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names sonarqube.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
         def SONAR_PASS = sh(script: 'aws ssm get-parameters --region us-east-1 --names sonarqube.pass  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
@@ -36,12 +35,10 @@ def sonarQubecheck() {
         // Wrap the password to mask it in the Jenkins build log
         wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${SONAR_PASS}", var: 'SECRET']]]) {
             // Execute SonarQube analysis
-//            sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
-            sh "echo sonar scan"
-        } else {
-            sh "echo scan failed"
+            sh "sonar-scanner -Dsonar.host.url=http://35.240.252.59:9000 -Dsonar.login='${SONAR_USER}' -Dsonar.password='${SONAR_PASS}' -Dsonar.projectKey=${component} -Dsonar.qualitygate.wait=true ${SONAR_EXTRA_OPTS}"
         }
-
+    } else {
+        sh "echo scan failed"
     }
 }
 def email(email_note){
