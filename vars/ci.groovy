@@ -39,7 +39,7 @@ def call() {
                 stage('Quality Control') {
                     steps {
                         script{
-                            common.sonarQubecheck(true)
+                            common.sonarQubecheck()
                         }
                     }
                 }
