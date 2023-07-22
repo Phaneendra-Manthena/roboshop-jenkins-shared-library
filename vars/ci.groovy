@@ -8,9 +8,9 @@ def call() {
         env.PUSH_CODE = "true"
     }
     if (!env.SONAR_SCAN) {
-        env.SONAR_SCAN = "false"
-    } else {
         env.SONAR_SCAN = "true"
+    } else {
+        env.SONAR_SCAN = "false"
     }
     try {
         pipeline {
