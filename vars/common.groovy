@@ -21,6 +21,9 @@ def unittests() {
 def dependencyCheck() {
     if (dependencyCheck == "true") {
         dependencyCheck additionalArguments: '--format HTML', odcInstallation: 'DP-Check'
+    } else {
+        // Execute this block of code when dependencyCheck is NOT equal to "true"
+        echo 'Skipping Dependency checks'
     }
 }
 
