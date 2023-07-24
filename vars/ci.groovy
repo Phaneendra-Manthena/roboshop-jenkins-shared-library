@@ -16,7 +16,7 @@ def call() {
                 stage('Compile/Build') {
                     steps {
                         script {
-                            cleanWs()
+//                            cleanWs()
                             common.compile()
                         }
                     }
