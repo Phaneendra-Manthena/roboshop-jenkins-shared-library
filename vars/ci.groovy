@@ -13,10 +13,16 @@ def call() {
                 label 'workstation'
             }
             stages {
+              stage('Cleaning WorkSpace') {
+               steps {
+                       script {
+                          cleanWs()
+                      }
+                  }
+              }
                 stage('Compile/Build') {
                     steps {
                         script {
-//                            cleanWs()
                             common.compile()
                         }
                     }
