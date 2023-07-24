@@ -29,10 +29,15 @@ def dependencyCheck() {
 def artifactPush() {
     if (app_lang == "nodejs") {
         sh "echo ${TAG_NAME} > VERSION"
-   sh "zip -r cart-${TAG_NAME}.zip node_modules server.js VERSION"
+   sh "zip -r ${component}-${TAG_NAME}.zip node_modules server.js VERSION"
     }
     sh 'ls -l'
-    sh "curl -v -u admin:admin123 --upload-file pom.xml http://localhost:8081/repository/maven-releases/org/foo/1.0/foo-1.0.pom"
+    NEXUS_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
+
+    NEXUS_PASS = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.pass  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
+    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${NEXUS_PASS}", var: 'SECRET']]]) {
+
+    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${component}-${TAG_NAME}.zip http://35.221.213.122:8081/repository/${component}/${component}-${TAG_NAME}.zip"
 }
 
 def email(email_note){
