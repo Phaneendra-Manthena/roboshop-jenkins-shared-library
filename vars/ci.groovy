@@ -7,7 +7,7 @@ def call() {
     } else {
         env.PUSH_CODE = "true"
     }
-    try {
+//    try {
         pipeline {
             agent {
                 label 'workstation'
@@ -70,7 +70,7 @@ def call() {
 //                }
             }
         }
-    } catch(Exception email_note) {
-        common.email("Failed")
-    }
+//    } catch(Exception email_note) {
+//        common.email("Failed")
+//    }
 }
