@@ -28,7 +28,8 @@ def dependencyCheck() {
 }
 def artifactPush() {
     if (app_lang == "nodejs") {
-   sh "zip -r cart-${TAG_NAME}.zip node_modules server.js"
+        sh "echo ${TAG_NAME} > VERSION"
+   sh "zip -r cart-${TAG_NAME}.zip node_modules server.js VERSION"
     }
     sh 'ls -l'
 }
