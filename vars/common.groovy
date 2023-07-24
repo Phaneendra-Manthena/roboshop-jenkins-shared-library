@@ -27,14 +27,14 @@ def dependencyCheck() {
     }
 }
 def artifactPush() {
+    sh "echo ${TAG_NAME} > VERSION"
     if (app_lang == "nodejs") {
-        sh "echo ${TAG_NAME} > VERSION"
         sh "zip -r ${component}-${TAG_NAME}.zip node_modules server.js VERSION ${extraFiles}"
     }
-    if (app_lang == "nginx") {
-        sh "echo ${TAG_NAME} > VERSION"
+    if (app_lang == "nginx" || app_lang == "python") {
         sh "zip -r ${component}-${TAG_NAME}.zip * -x Jenkinsfile"
     }
+
 
     NEXUS_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
 
