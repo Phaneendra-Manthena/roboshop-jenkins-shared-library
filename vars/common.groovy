@@ -12,8 +12,7 @@ def unittests() {
         }
 
     if (app_lang == "java") {
-        sh 'mvn test'
-        sh "mvn package && cp target/${component}-1.0.jar ${component}.jar"
+        sh 'mvn package && cp target/${component}-1.0.jar ${component}.jar'
     }
     if (app_lang == "python") {
         sh 'python3 -m unittest'
