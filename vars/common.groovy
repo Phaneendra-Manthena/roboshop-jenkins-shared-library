@@ -13,6 +13,7 @@ def unittests() {
 
     if (app_lang == "java") {
         sh 'mvn test'
+        sh "mvn package && cp target/${component}-1.0.jar ${component}.jar"
     }
     if (app_lang == "python") {
         sh 'python3 -m unittest'
@@ -34,7 +35,9 @@ def artifactPush() {
     if (app_lang == "nginx" || app_lang == "python") {
         sh "zip -r ${component}-${TAG_NAME}.zip * -x Jenkinsfile"
     }
-
+    if (app_lang == "maven") {
+        sh "zip -r ${component}-${TAG_NAME}.zip * ${component}.jar VERSION"
+    }
 
     NEXUS_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
 
