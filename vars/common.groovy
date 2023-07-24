@@ -29,17 +29,20 @@ def dependencyCheck() {
 def artifactPush() {
     if (app_lang == "nodejs") {
         sh "echo ${TAG_NAME} > VERSION"
-   sh "zip -r ${component}-${TAG_NAME}.zip node_modules server.js VERSION"
+        sh "zip -r ${component}-${TAG_NAME}.zip node_modules server.js VERSION"
     }
     sh 'ls -l'
     NEXUS_USER = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.user  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
 
     NEXUS_PASS = sh(script: 'aws ssm get-parameters --region us-east-1 --names nexus.pass  --with-decryption --query Parameters[0].Value | sed \'s/"//g\'', returnStdout: true).trim()
-    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${NEXUS_PASS}", var: 'SECRET']]])
 
-    sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${component}-${TAG_NAME}.zip http://35.221.213.122:8081/repository/${component}/${component}-${TAG_NAME}.zip"
-
+    // Use wrap step to mask the NEXUS_PASS variable
+    wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${NEXUS_PASS}", var: 'SECRET']]]) {
+        // Your sensitive code block that needs to be wrapped with password masking
+        sh "curl -v -u ${NEXUS_USER}:${NEXUS_PASS} --upload-file ${component}-${TAG_NAME}.zip http://35.221.213.122:8081/repository/${component}/${component}-${TAG_NAME}.zip"
+    }
 }
+
 
 def email(email_note){
     mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
