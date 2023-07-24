@@ -16,6 +16,7 @@ def call() {
                 stage('Compile/Build') {
                     steps {
                         script {
+                            cleanWs()
                             common.compile()
                         }
                     }
@@ -61,13 +62,13 @@ def call() {
                     }
                 }
                 // Add the 'Cleaning WorkSpace' stage outside of the 'stages' block
-                stage('Cleaning WorkSpace') {
-                    steps {
-                        script {
-                            cleanWs()
-                        }
-                    }
-                }
+//                stage('Cleaning WorkSpace') {
+//                    steps {
+//                        script {
+//                            cleanWs()
+//                        }
+//                    }
+//                }
             }
         }
     } catch(Exception email_note) {
