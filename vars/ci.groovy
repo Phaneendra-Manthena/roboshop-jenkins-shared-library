@@ -55,7 +55,7 @@ def call() {
                         script {
 
                             if (env.PUSH_CODE == "true") {
-                                echo 'Uploading to Centralized Place'
+                                common.artifactPush()
                             }
                         }
                     }

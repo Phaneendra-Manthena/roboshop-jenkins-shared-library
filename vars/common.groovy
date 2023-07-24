@@ -26,6 +26,11 @@ def dependencyCheck() {
         echo 'Skipping Dependency checks'
     }
 }
+def artifactPush() {
+    if (app_lang == "nodejs") {
+     zip -r cart-${TAG_NAME}.zip node_modules server.js
+    }
+}
 
 def email(email_note){
     mail bcc: '', body: "Job Failed - ${JOB_BASE_NAME}\nJenkins URL - ${JOB_URL}", cc: '', from: 'mpvarma9997@gmail.com', replyTo: '', subject: "Jenkins Job Failed - ${JOB_BASE_NAME}", to: 'phani.manthena27@gmail.com'
