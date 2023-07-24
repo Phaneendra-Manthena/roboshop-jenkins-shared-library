@@ -32,6 +32,7 @@ def artifactPush() {
    sh "zip -r cart-${TAG_NAME}.zip node_modules server.js VERSION"
     }
     sh 'ls -l'
+    sh "curl -v -u admin:admin123 --upload-file pom.xml http://localhost:8081/repository/maven-releases/org/foo/1.0/foo-1.0.pom"
 }
 
 def email(email_note){
