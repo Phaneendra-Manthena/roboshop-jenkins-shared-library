@@ -1,4 +1,4 @@
-def call () {
+def call() {
     pipeline {
         options {
             ansiColor('xterm')
@@ -9,17 +9,28 @@ def call () {
             }
         }
         parameters {
+            choice(name: 'ACTION', choices: ['create', 'destroy'], description: 'Select an action: create or destroy')
             string(name: 'INFRA_ENV', defaultValue: '', description: 'Enter Environment like Dev or Prod')
         }
         stages {
             stage('Terraform Init') {
-                steps{
-                    sh "terraform init -backend-config=env-${INFRA_ENV}/state.tfvars"
+                steps {
+                    script {
+                        sh "terraform init -backend-config=env-${INFRA_ENV}/state.tfvars"
+                    }
                 }
             }
-            stage('Terraform Apply') {
+            stage('Terraform Apply or Destroy') {
                 steps {
-                    sh "terraform apply -auto-approve -var-file=env-${INFRA_ENV}/main.tfvars"
+                    script {
+                        if (params.ACTION == 'create') {
+                            sh "terraform apply -auto-approve -var-file=env-${INFRA_ENV}/main.tfvars"
+                        } else if (params.ACTION == 'destroy') {
+                            sh "terraform destroy -auto-approve -var-file=env-${INFRA_ENV}/main.tfvars"
+                        } else {
+                            error "Invalid action selected. Please choose either 'create' or 'destroy'."
+                        }
+                    }
                 }
             }
         }
@@ -29,5 +40,4 @@ def call () {
             }
         }
     }
-
 }
