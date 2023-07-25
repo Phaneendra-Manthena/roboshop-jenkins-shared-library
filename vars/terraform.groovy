@@ -36,9 +36,9 @@ def call() {
                             sh "terraform apply -auto-approve -var-file=env-${INFRA_ENV}/main.tfvars"
                         } else if (params.ACTION == 'destroy') {
                             sh "terraform destroy -auto-approve -var-file=env-${INFRA_ENV}/main.tfvars"
-                        } else {
-                            error "Invalid action selected. Please choose either 'create' or 'destroy'."
-                        }
+//                        } else {
+//                            error "Invalid action selected. Please choose either 'create' or 'destroy'."
+//                        }
                     }
                 }
             }
