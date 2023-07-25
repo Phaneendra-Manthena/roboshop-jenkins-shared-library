@@ -5,7 +5,7 @@ def call () {
         }
         agent {
             node {
-                label 'slave'
+                label 'workstation'
             }
         }
         parameters {
