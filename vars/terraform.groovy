@@ -25,7 +25,7 @@ def call() {
                     script {
                         if (params.ACTION == 'refresh') {
                             sh "terraform init -backend-config=env-${INFRA_ENV}/state.tfvars"
-                            sh "terraform refresh -backend-config=env-${INFRA_ENV}/state.tfvars"
+                            sh "terraform refresh"
                         }
                     }
                 }
