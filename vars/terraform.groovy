@@ -17,6 +17,7 @@ def call() {
                 steps {
                     script {
                         sh "terraform init -backend-config=env-${INFRA_ENV}/state.tfvars"
+                        sh "terraform refresh -backend-config=env-${INFRA_ENV}/state.tfvars"
                     }
                 }
             }
