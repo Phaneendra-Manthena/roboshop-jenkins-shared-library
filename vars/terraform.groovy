@@ -9,7 +9,7 @@ def call() {
             }
         }
         parameters {
-            choice(name: 'ACTION', choices: ['create', 'plan', 'destroy'], description: 'Select an action: create or destroy')
+            choice(name: 'ACTION', choices: ['create', 'plan','refresh' 'destroy'], description: 'Select an action: create or destroy')
             string(name: 'INFRA_ENV', defaultValue: '', description: 'Enter Environment like dev or prod')
         }
         stages {
@@ -17,7 +17,15 @@ def call() {
                 steps {
                     script {
                         sh "terraform init -backend-config=env-${INFRA_ENV}/state.tfvars"
-                        sh "terraform refresh -backend-config=env-${INFRA_ENV}/state.tfvars"
+                    }
+                }
+            }
+            stage('Terraform Refresh') {
+                steps {
+                    script {
+                        if (params.ACTION == 'refresh') {
+                            sh "terraform refresh -backend-config=env-${INFRA_ENV}/state.tfvars"
+                        }
                     }
                 }
             }
