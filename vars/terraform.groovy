@@ -9,7 +9,7 @@ def call() {
             }
         }
         parameters {
-            choice(name: 'ACTION', choices: ['create', 'plan','refresh' 'destroy'], description: 'Select an action: create or destroy')
+            choice(name: 'ACTION', choices: ['create', 'plan','refresh' ,'destroy'], description: 'Select an action: create or destroy')
             string(name: 'INFRA_ENV', defaultValue: '', description: 'Enter Environment like dev or prod')
         }
         stages {
